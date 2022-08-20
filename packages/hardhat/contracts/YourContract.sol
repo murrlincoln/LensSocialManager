@@ -56,24 +56,25 @@ contract YourContract is AccessControl {
     TodoAddData = "test"; //temp code 
 
     //todo - Integrate with LensHub Proxy to make post
+    //LensProfile.post(TodoAddData)
   }
 
 
 
-  // function approve(uint256 _tokenId) public {
-  //   LensProfile.approve(msg.sender, _tokenId);
-  // }
+  function approve(uint256 _tokenId) public {
+    LensProfile.approve(msg.sender, _tokenId);
+  }
 
-  // function deposit(uint256 _tokenId, address contractAddress) public {
-  //   LensProfile.safeTransferFrom(from, to, tokenId, data);
-  // }
+  function deposit(uint256 _tokenId, address contractAddress) public {
+    LensProfile.safeTransferFrom(msg.sender, contractAddress, _tokenId, ""); //from, to, tokenId, data
+  }
 
 
   //Withdraws the profile to the specified address
   function withdraw(address _to, address _contract, uint256 _tokenId) public {
     require(hasRole(WITHDRAW_ROLE, msg.sender), "Caller is not a withdrawer");
 
-    LensProfile.safeTransferFrom(address(this), _to, _tokenId, "");
+    LensProfile.safeTransferFrom(address(this), _to, _tokenId, ""); //todo - LPP supports no data
   }
 
 
